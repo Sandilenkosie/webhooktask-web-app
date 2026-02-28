@@ -73,7 +73,7 @@ export const Index = () => {
       <div className="w-full px-4 max-w-2xl">
         <div className="mx-auto bg-white border border-black rounded-2xl p-8 shadow-2xl">
           <h1 className="text-2xl font-extrabold mb-4 text-black">
-            Let&apos;s build something great
+            Let&apos;s try out the Webhook Task API!
           </h1>
 
           <form onSubmit={handleSubmit} className="space-y-4">

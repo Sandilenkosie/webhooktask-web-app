@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Skelekon from "../components/ui/skelekon";
 import FloatingInput from "../components/ui/floating-input";
 import { Checkbox } from "../components/ui/checkbox";
 import type { TaskRequestPayload } from "../shared/type/tasks";
@@ -14,6 +15,7 @@ export const Index = () => {
     data: ""
   });
   const [isLoading, setIsLoading] = useState(false)
+  const [isPageLoading, setIsPageLoading] = useState(true);
   const [errors, setErrors] = useState<{ email?: string; url?: string; data?: string }>({});
   const [useDefaultUrl, setUseDefaultUrl] = useState(true);
   const [useDefaultWord, setUseDefaultWord] = useState(true);
@@ -67,6 +69,24 @@ export const Index = () => {
             setIsLoading(false)
         }
   };
+
+  useEffect(() => {
+    // Show skeleton briefly while page initializes. Increased to 1s so it's noticeable.
+    const t = setTimeout(() => setIsPageLoading(false), 1000);
+    return () => clearTimeout(t);
+  }, []);
+
+  if (isPageLoading) {
+    return (
+      <main className="min-h-screen bg-gray-100 flex items-center justify-center py-12">
+        <div className="w-full px-4 max-w-2xl">
+          <div className="mx-auto bg-white border border-black rounded-2xl p-8 shadow-2xl">
+            <Skelekon lines={8} />
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-gray-100 flex items-center justify-center py-12">
@@ -194,7 +214,7 @@ export const Index = () => {
                 className="w-full rounded-lg px-4 py-3 bg-black hover:bg-black/90 text-white text-center disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={isLoading}
               >
-                {isLoading ? "Signing Up..." : "Sign Up"}
+                {isLoading ? "Pushing..." : "Push"}
               </button>
             </div>
           </form>
